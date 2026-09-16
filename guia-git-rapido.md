@@ -1,165 +1,234 @@
-# Git em equipe — guia rápido com passo a passo
+# Guia rápido de Git e GitHub
 
-**Tarefa do exemplo:** adicionar uma seção de contato ao site, trabalhar na branch `contato` e propor a entrada dessa mudança na `main`.
+Procure o que você quer fazer e siga os comandos na ordem.
 
-Para entender os conceitos com calma, leia o [guia aprofundado](guia-git-aprofundado.md).
+Nos exemplos, a branch principal é `main` e a funcionalidade é `pagina-de-contato`.
 
-## Antes de começar
+## O que você quer fazer?
 
-- O projeto já deve estar no computador, com Git configurado e acesso de envio ao repositório da turma no GitHub.
-- Abra o terminal na raiz do projeto: a pasta principal que contém os arquivos do site.
-- Neste exemplo, a branch principal se chama `main` e o remoto se chama `origin`. Use os nomes combinados para o projeto se forem diferentes.
-- Execute **uma etapa de cada vez**. Se um comando falhar, leia a mensagem com a pessoa instrutora antes de seguir.
+1. [Clonar um projeto](#1-clonar-um-projeto)
+2. [Começar uma nova funcionalidade](#2-começar-uma-nova-funcionalidade)
+3. [Criar um commit](#3-criar-um-commit)
+4. [Enviar a branch ao GitHub](#4-enviar-a-branch-ao-github)
+5. [Adicionar mais commits](#5-adicionar-mais-commits)
+6. [Abrir um Pull Request](#6-abrir-um-pull-request)
+7. [Corrigir um Pull Request](#7-corrigir-um-pull-request)
+8. [Fazer um merge sem conflito](#8-fazer-um-merge-sem-conflito)
+9. [Resolver um conflito](#9-resolver-um-conflito)
+10. [Começar a próxima tarefa](#10-começar-a-próxima-tarefa)
 
-## 1. Confira se pode começar uma tarefa nova
+---
+
+## 1. Clonar um projeto
+
+Use quando o projeto ainda não está no seu computador.
 
 ```bash
-git status
+git clone https://github.com/usuario/nome-do-projeto.git
+cd nome-do-projeto
 ```
 
-**O que faz:** mostra a branch atual e se existem mudanças pendentes. Não modifica arquivos.
+- `git clone` baixa o projeto.
+- `cd` entra na pasta do projeto.
 
-**Confira:** comece sem alterações pendentes (`nothing to commit, working tree clean`). Se aparecer trabalho anterior, conclua esse trabalho na branch correta com orientação antes de trocar de branch.
+Você só precisa clonar uma vez.
 
-## 2. Entre na principal e atualize
+---
+
+## 2. Começar uma nova funcionalidade
+
+Entre na `main`, atualize e crie uma branch nova:
 
 ```bash
 git checkout main
 git pull origin main
+git checkout -b pagina-de-contato
 ```
 
-- `git checkout main`: muda para a branch principal no computador.
-- `git pull origin main`: busca a `main` do GitHub e integra suas mudanças à branch atual. `origin` é o apelido do repositório remoto.
+- `checkout main`: entra na branch principal.
+- `pull`: traz as alterações mais recentes.
+- `checkout -b`: cria a branch da funcionalidade e entra nela.
 
-**Por quê:** a tarefa nova deve começar com o trabalho que a equipe já incorporou. Neste roteiro, não fazemos commits diretamente na `main`.
+Use um nome curto que explique a tarefa, como `corrige-menu` ou `adiciona-formulario`.
 
-## 3. Crie a branch da tarefa
+---
 
-```bash
-git checkout -b contato
-```
+## 3. Criar um commit
 
-**O que faz:** `-b` cria a branch `contato` a partir do ponto atual e já entra nela. Seus novos commits serão feitos nessa branch.
-
-**Confira com `git status`:** deve aparecer `On branch contato`.
-
-Se você está retomando essa tarefa e a branch já existe, use `git checkout contato`: ele apenas entra na branch existente, sem criar outra.
-
-## 4. Faça a alteração e confira o site
-
-No editor, adicione a seção de contato no local adequado da página. Salve o arquivo e abra a página no navegador para conferir o resultado.
-
-```bash
-git status
-```
-
-**O que faz:** permite conferir quais arquivos foram alterados antes de preparar o commit. Verifique se pertencem à tarefa.
-
-## 5. Prepare e registre a mudança
-
-```bash
-git add .
-git commit -m "Adiciona seção de contato"
-```
-
-- `git add .`: prepara as mudanças da pasta atual e de suas subpastas para o commit, incluindo exclusões. Por isso, confira os arquivos antes de usar o ponto.
-- `git commit`: registra as mudanças preparadas no histórico local.
-- `-m`: permite informar a mensagem entre aspas. Escreva o que foi feito.
-
-**Lembrete:** se editar novamente depois do `add`, salve e repita o `add` antes do commit para incluir a nova edição. Salvar, preparar e registrar são etapas diferentes.
-
-## 6. Envie a branch para o GitHub
-
-```bash
-git push -u origin contato
-```
-
-**O que faz:** envia os commits da `contato` para o remoto `origin`. O `-u` associa essa branch local à remota, permitindo usar apenas `git push` nos próximos envios dela.
-
-**Confira:** o envio deve terminar com sucesso. O trabalho está na branch `contato` do GitHub; a integração na `main` vem depois da revisão.
-
-## 7. Abra o Pull Request no GitHub
-
-1. Abra o repositório da turma e inicie a criação de um Pull Request (PR).
-2. Escolha **destino/base: `main`** e **origem/compare: `contato`**.
-3. Confira se a comparação mostra somente as mudanças esperadas para a tarefa.
-4. Escreva o título “Adiciona seção de contato”. Na descrição, diga o que mudou e o que você conferiu no navegador.
-5. Crie o PR e combine a revisão com a dupla ou com a pessoa instrutora.
-
-**O que faz:** propõe incorporar a tarefa na `main` e permite que outra pessoa revise. Abrir o PR ainda não realiza essa integração.
-
-## 8. Se pedirem ajustes
-
-Continue na `contato`. Corrija o que foi combinado, salve e confira a página. Depois:
+Depois de alterar e salvar os arquivos:
 
 ```bash
 git status
 git add .
-git commit -m "Corrige e-mail de contato"
+git commit -m "Adiciona página de contato"
+```
+
+- `status`: mostra os arquivos alterados.
+- `add .`: prepara as alterações.
+- `commit`: registra as alterações no computador.
+
+Escreva uma mensagem que diga o que foi feito.
+
+---
+
+## 4. Enviar a branch ao GitHub
+
+Na primeira vez que enviar a branch:
+
+```bash
+git push -u origin pagina-de-contato
+```
+
+O `-u` conecta a branch do computador à branch do GitHub.
+
+Nos próximos envios dessa branch, use apenas:
+
+```bash
 git push
 ```
 
-**O que cada comando faz:** `status` confere a situação; `add` prepara a correção; `commit` a registra; `push` a envia. Adapte a mensagem à correção realizada.
+---
 
-**Confira:** os novos commits aparecem no mesmo PR aberto. Não é necessário criar outro.
+## 5. Adicionar mais commits
 
-## 9. Depois da revisão e do merge
+Faça as novas alterações, salve e execute:
 
-A pessoa responsável conclui o **merge** do PR no GitHub: incorpora as mudanças na `main`. Se houver conflito, use a seção abaixo antes de concluir o PR.
+```bash
+git status
+git add .
+git commit -m "Adiciona campos ao formulário"
+git push
+```
 
-Depois que o PR estiver integrado, sem alterações locais pendentes, execute:
+Se já existe um Pull Request dessa branch, ele será atualizado. Não abra outro.
+
+---
+
+## 6. Abrir um Pull Request
+
+Depois de enviar a branch, abra o repositório no GitHub:
+
+1. Clique em **Compare & pull request**.
+2. Em **base**, escolha `main`.
+3. Em **compare**, escolha `pagina-de-contato`.
+4. Escreva um título que explique a mudança.
+5. Descreva o que foi feito e como foi conferido.
+6. Clique em **Create pull request**.
+
+Exemplo de título:
+
+```text
+Adiciona página de contato
+```
+
+---
+
+## 7. Corrigir um Pull Request
+
+Entre na branch do Pull Request:
+
+```bash
+git checkout pagina-de-contato
+```
+
+Faça a correção, salve e envie outro commit:
+
+```bash
+git status
+git add .
+git commit -m "Corrige texto do formulário"
+git push
+```
+
+O mesmo Pull Request será atualizado.
+
+---
+
+## 8. Fazer um merge sem conflito
+
+No Pull Request do GitHub:
+
+1. Confira se a branch pode ser mesclada.
+2. Clique em **Merge pull request**.
+3. Clique em **Confirm merge**.
+
+Depois, atualize a `main` no computador:
 
 ```bash
 git checkout main
 git pull origin main
 ```
 
-**O que fazem:** o `checkout` entra na principal local e o `pull` traz a versão do GitHub, agora com a tarefa integrada. Confira a seção de contato na página. Comece a próxima tarefa criando outra branch a partir dessa `main` atualizada.
+---
 
-## Se aparecer um conflito no PR
+## 9. Resolver um conflito
 
-Use este trecho com a pessoa instrutora. **Antes, registre e envie suas alterações da `contato`; o `git status` deve indicar que não há mudanças pendentes.**
-
-### A. Traga a principal para a tarefa
+Atualize a `main`:
 
 ```bash
 git checkout main
 git pull origin main
-git checkout contato
+```
+
+Volte para a branch da funcionalidade e traga a `main` para ela:
+
+```bash
+git checkout pagina-de-contato
 git merge main
 ```
 
-1. `checkout main` entra na principal local.
-2. `pull origin main` atualiza essa principal com o GitHub.
-3. `checkout contato` volta à tarefa.
-4. `merge main` incorpora a principal local à branch atual, `contato`.
+Veja os arquivos com conflito:
 
-### B. Resolva os arquivos indicados
-
-Execute `git status` para consultar os arquivos em conflito. Abra-os no editor. Um trecho pode aparecer assim:
-
-```text
-<<<<<<< HEAD
-<h2>Fale com a equipe</h2>
-=======
-<h2>Entre em contato</h2>
->>>>>>> main
+```bash
+git status
 ```
 
-A parte de cima é a da `contato`; a de baixo veio da `main`. Converse com a dupla sobre o resultado correto. Edite para deixar apenas o conteúdo final, sem as três linhas de marcação. Resolva todos os trechos, salve e confira a página no navegador.
+Abra cada arquivo indicado. Você verá estas marcações:
 
-### C. Registre e envie a resolução
+- `<<<<<<< HEAD`: começa o conteúdo da sua branch;
+- `=======`: separa as duas versões;
+- `>>>>>>> main`: termina o conteúdo que veio da `main`.
+
+Escolha o conteúdo correto e apague as três marcações.
+
+Salve, confira o projeto e registre a resolução:
 
 ```bash
 git add .
-git commit -m "Resolve conflito no título de contato"
+git commit -m "Resolve conflito com a main"
 git push
 ```
 
-**O que fazem:** `add` prepara os arquivos resolvidos, `commit` conclui o merge pendente e `push` envia o resultado ao mesmo PR. Volte à revisão no GitHub.
+Volte ao Pull Request. Quando o conflito desaparecer, faça o merge pelo GitHub.
 
-Se `git merge main` concluir sem conflito, pule a edição de marcações e o commit de resolução. Se abrir um editor para a mensagem do merge, conclua-o com a pessoa instrutora. Confira a página e faça `git push` para enviar eventuais commits novos.
+---
 
-## Para lembrar durante a prática
+## 10. Começar a próxima tarefa
 
-**Salvar no editor → `add` prepara → `commit` registra no computador → `push` envia → PR pede revisão → merge incorpora na principal → `pull` atualiza a principal local.**
+Depois do merge, atualize a `main` e crie outra branch:
+
+```bash
+git checkout main
+git pull origin main
+git checkout -b nome-da-nova-tarefa
+```
+
+Use uma branch nova para cada tarefa.
+
+---
+
+## Ordem para lembrar
+
+```text
+clonar
+→ atualizar a main
+→ criar uma branch
+→ alterar os arquivos
+→ git add
+→ git commit
+→ git push
+→ abrir o Pull Request
+→ resolver conflitos, se existirem
+→ fazer o merge
+→ atualizar a main
+```
